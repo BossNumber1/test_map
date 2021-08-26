@@ -77,6 +77,8 @@ function App() {
                         coordinates={coordinates}
                         setPlacemarker={setPlacemarker}
                         setNoTags={setNoTags}
+                        setLatitudeSer={setLatitudeSer}
+                        setLongitudeSer={setLongitudeSer}
                     />
                     <div style={{ marginBottom: 25 }}>{noTags}</div>
                     <BalList

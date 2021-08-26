@@ -1,7 +1,13 @@
 import React from "react";
 import axios from "axios";
 
-function Adder({ coordinates, setPlacemarker, setNoTags }) {
+function Adder({
+    coordinates,
+    setPlacemarker,
+    setNoTags,
+    setLatitudeSer,
+    setLongitudeSer,
+}) {
     const [addBal, setAddBal] = React.useState("");
     const [addSh, setSh] = React.useState("");
     const [addDol, setDol] = React.useState("");
@@ -25,6 +31,8 @@ function Adder({ coordinates, setPlacemarker, setNoTags }) {
                 setAddBal("");
                 setDol("");
                 setSh("");
+                setLatitudeSer(addSh);
+                setLongitudeSer(addDol);
             });
     };
 
