@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-function Adder({ setNoTags, setPlacemarker }) {
+function Adder({ setNoTags, setPlacemarker, placemarker }) {
     const createBal = (e) => {
         e.preventDefault();
 
@@ -30,14 +30,19 @@ function Adder({ setNoTags, setPlacemarker }) {
 
                 const initialValue = [
                     {
-                        id: 0,
                         name: nameAdder,
                         latitude: latitudeAdder,
                         longitude: longitudeAdder,
                     },
                 ];
 
-                setPlacemarker(initialValue);
+                debugger;
+
+                if (placemarker.length > 0) {
+                    setPlacemarker([...placemarker, initialValue[0]]);
+                } else {
+                    setPlacemarker(initialValue);
+                }
             });
 
         debugger;

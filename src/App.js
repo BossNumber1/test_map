@@ -60,14 +60,15 @@ function App() {
                     <Adder
                         setNoTags={setNoTags}
                         setPlacemarker={setPlacemarker}
+                        placemarker={placemarker}
                     />
 
                     <div style={{ marginBottom: 25 }}>
                         {noTags
                             ? noTags
-                            : placemarker.map((item) => (
+                            : placemarker.map((item, index) => (
                                   <BalList
-                                      id={item.id}
+                                      key={index}
                                       name={item.name}
                                       latitude={item.latitude}
                                       longitude={item.longitude}

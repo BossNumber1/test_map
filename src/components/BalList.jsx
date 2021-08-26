@@ -16,16 +16,20 @@ function BalList({
     const [dol, setDol] = React.useState(longitude || "");
 
     const upgrade = () => {
+        debugger;
         axios
             .post("http://localhost:80/updateBaloon/", {
                 id_user: localStorage.getItem("id_user"),
                 name: nam,
+                oldName: name,
                 latitude: shir,
                 longitude: dol,
             })
             .then(() => {
+                debugger;
                 setShow(false);
             });
+        debugger;
     };
 
     const showForm = () => {
