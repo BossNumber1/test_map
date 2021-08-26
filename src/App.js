@@ -1,36 +1,80 @@
 import React from "react";
 import "./App.css";
-import { YMaps, Map, Placemark } from "react-yandex-maps";
+import Adder from "./components/Adder";
+import Auth from "./components/auth/Auth";
+import BalList from "./components/BalList";
+import Mapper from "./components/Mapper";
+import axios from "axios";
 
 function App() {
-    const [shir, setShir] = React.useState(false);
-    const [dol, setDol] = React.useState(false);
+    const [placemarker, setPlacemarker] = React.useState("");
+    const [noTags, setNoTags] = React.useState(false);
+    const [goodAuth, setGoodAuth] = React.useState(false);
 
-    const coordinates = [
-        [55.684758, 37.738521],
-        [57.684758, 39.738521],
-    ];
+    const [latitude, setLatitude] = React.useState(false);
+    const [longitude, setLongitude] = React.useState(false);
+
+    const coordinates = [latitude, longitude];
 
     React.useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
-            setShir(position.coords.latitude);
-            setDol(position.coords.longitude);
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
         });
     }, []);
 
+    const changeHandler = (e) => {
+        e.preventDefault();
+        setPlacemarker(e.target.value);
+    };
+
+    React.useEffect(() => {
+        if (goodAuth) {
+            getBal();
+        }
+    }, [goodAuth]);
+
+    const getBal = () => {
+        let id_user = localStorage.getItem("id_user");
+        axios
+            .post("http://localhost:80/getBaloons/", {
+                id_user: id_user,
+            })
+            .then((resultat) => {
+                if (resultat.data !== "[]") {
+                    let name = JSON.parse(resultat.data)[0].name;
+                    setPlacemarker(name);
+                } else {
+                    setNoTags("Меток нет");
+                }
+            });
+    };
+
     return (
         <div className="App">
-            {shir ? (
-                <YMaps>
-                    <Map defaultState={{ center: [shir, dol], zoom: 9 }}>
-                        {coordinates.map((coordinate) => (
-                            // <Placemark key={0} geometry={coordinate} />
-                            <Placemark key={0} geometry={[shir, dol]} />
-                        ))}
-                    </Map>
-                </YMaps>
+            {!goodAuth ? (
+                <Auth setGoodAuth={setGoodAuth} />
             ) : (
-                "Loading..."
+                <>
+                    <div style={{ marginBottom: 25 }}>
+                        <h3>Вы вошли, как - {localStorage.getItem("login")}</h3>
+                    </div>
+                    <Adder
+                        coordinates={coordinates}
+                        setPlacemarker={setPlacemarker}
+                        setNoTags={setNoTags}
+                    />
+                    <div style={{ marginBottom: 25 }}>{noTags}</div>
+                    <BalList
+                        placemarker={placemarker}
+                        changeHandler={changeHandler}
+                        coordinates={coordinates}
+                        setPlacemarker={setPlacemarker}
+                        setNoTags={setNoTags}
+                        noTags={noTags}
+                    />
+                    <Mapper latitude={latitude} longitude={longitude} />
+                </>
             )}
         </div>
     );
