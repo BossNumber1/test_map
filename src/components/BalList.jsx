@@ -16,7 +16,6 @@ function BalList({
     const [dol, setDol] = React.useState(longitude || "");
 
     const upgrade = () => {
-        debugger;
         axios
             .post("http://localhost:80/updateBaloon/", {
                 id_user: localStorage.getItem("id_user"),
@@ -26,10 +25,8 @@ function BalList({
                 longitude: dol,
             })
             .then(() => {
-                debugger;
                 setShow(false);
             });
-        debugger;
     };
 
     const showForm = () => {
@@ -72,7 +69,9 @@ function BalList({
                             <div style={{ display: "flex", marginBottom: 25 }}>
                                 {!show ? (
                                     <>
-                                        {name}
+                                        название {name}
+                                        ширина {shir}
+                                        долгота {dol}
                                         <form>
                                             <button
                                                 onClick={showForm}

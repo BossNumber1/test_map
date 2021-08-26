@@ -80,7 +80,7 @@ function App() {
                               ))}
                     </div>
 
-                    <Mapper />
+                    <Mapper placemarker={placemarker} />
                 </>
             )}
         </div>
