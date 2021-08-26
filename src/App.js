@@ -11,10 +11,13 @@ function App() {
     const [noTags, setNoTags] = React.useState(false);
     const [goodAuth, setGoodAuth] = React.useState(false);
 
-    const [latitude, setLatitude] = React.useState(false);
-    const [longitude, setLongitude] = React.useState(false);
+    const [currentLatitude, setLatitude] = React.useState(false);
+    const [currentLongitude, setLongitude] = React.useState(false);
 
-    const coordinates = [latitude, longitude];
+    const [latitude, setLatitudeSer] = React.useState("");
+    const [longitude, setLongitudeSer] = React.useState("");
+
+    const coordinates = [currentLatitude, currentLongitude];
 
     React.useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -43,7 +46,18 @@ function App() {
             .then((resultat) => {
                 if (resultat.data !== "[]") {
                     let name = JSON.parse(resultat.data)[0].name;
+                    let coor = JSON.parse(
+                        JSON.parse(resultat.data)[0].coordinats
+                    );
+                    // coor.split
+
+                    // let cir = coor.split(",");
+                    debugger;
                     setPlacemarker(name);
+                    // setLatitudeSer(cir[0]);
+                    // setLongitudeSer(cir[1]);
+                    setLatitudeSer(coor[0]);
+                    setLongitudeSer(coor[1]);
                 } else {
                     setNoTags("Меток нет");
                 }
@@ -72,8 +86,17 @@ function App() {
                         setPlacemarker={setPlacemarker}
                         setNoTags={setNoTags}
                         noTags={noTags}
+                        // changeLatHandler={changeLatHandler}
+                        // changeLongHandler={changeLongHandler}
+                        latitude={latitude}
+                        longitude={longitude}
+                        setLatitudeSer={setLatitudeSer}
+                        setLongitudeSer={setLongitudeSer}
                     />
-                    <Mapper latitude={latitude} longitude={longitude} />
+                    <Mapper
+                        currentLatitude={currentLatitude}
+                        currentLongitude={currentLongitude}
+                    />
                 </>
             )}
         </div>

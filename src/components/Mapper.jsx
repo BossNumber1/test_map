@@ -1,14 +1,14 @@
 import React from "react";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 
-function Mapper({ latitude, longitude }) {
+function Mapper({ currentLatitude, currentLongitude }) {
     return (
         <>
-            {latitude ? (
+            {currentLatitude ? (
                 <YMaps>
                     <Map
                         defaultState={{
-                            center: [latitude, longitude],
+                            center: [currentLatitude, currentLongitude],
                             zoom: 9,
                         }}
                     >
@@ -16,7 +16,7 @@ function Mapper({ latitude, longitude }) {
 
                         <Placemark
                             modules={["geoObject.addon.balloon"]}
-                            geometry={[latitude, longitude]}
+                            geometry={[currentLatitude, currentLongitude]}
                             properties={{
                                 balloonContent: "Название локации из списка",
                             }}
@@ -33,11 +33,11 @@ function Mapper({ latitude, longitude }) {
 export default Mapper;
 
 //  <YMaps>
-//                     // <Map defaultState={{ center: [latitude, longitude], zoom: 9 }}>
+//                     // <Map defaultState={{ center: [currentLatitude, currentLongitude], zoom: 9 }}>
 
 //                         // {coordinates.map((coordinate) => (
 //                     //         // <Placemark key={0} geometry={coordinate} />
-//                     //         <Placemark key={0} geometry={[latitude, longitude]} />
+//                     //         <Placemark key={0} geometry={[currentLatitude, currentLongitude]} />
 //                     //     ))}
 //                     // </Map>
 //                     <Map state={mapState}>

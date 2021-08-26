@@ -3,6 +3,8 @@ import axios from "axios";
 
 function Adder({ coordinates, setPlacemarker, setNoTags }) {
     const [addBal, setAddBal] = React.useState("");
+    const [addSh, setSh] = React.useState("");
+    const [addDol, setDol] = React.useState("");
 
     const createBal = (e) => {
         e.preventDefault();
@@ -15,18 +17,30 @@ function Adder({ coordinates, setPlacemarker, setNoTags }) {
             .post("http://localhost:80/saveBaloon/", {
                 id_user: id_user,
                 name: nameBal,
-                coordinats: JSON.stringify(coordinates),
+                coordinats: JSON.stringify([addSh, addDol]),
             })
             .then((resus) => {
                 setPlacemarker(nameBal);
                 setNoTags(false);
                 setAddBal("");
+                setDol("");
+                setSh("");
             });
     };
 
     const changeHandler = (e) => {
         e.preventDefault();
         setAddBal(e.target.value);
+    };
+
+    const changeShirHandler = (e) => {
+        e.preventDefault();
+        setSh(e.target.value);
+    };
+
+    const changeDolHandler = (e) => {
+        e.preventDefault();
+        setDol(e.target.value);
     };
 
     return (
@@ -39,6 +53,20 @@ function Adder({ coordinates, setPlacemarker, setNoTags }) {
                     placeholder="Имя вашей метки"
                     value={addBal}
                     onChange={changeHandler}
+                />
+                <input
+                    type="text"
+                    name="addbal"
+                    placeholder="Ширина"
+                    value={addSh}
+                    onChange={changeShirHandler}
+                />
+                <input
+                    type="text"
+                    name="addbal"
+                    placeholder="Долгота"
+                    value={addDol}
+                    onChange={changeDolHandler}
                 />
                 <button onClick={createBal} style={{ marginLeft: 10 }}>
                     Добавить

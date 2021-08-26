@@ -8,6 +8,12 @@ function BalList({
     setPlacemarker,
     setNoTags,
     noTags,
+    //     changeLatHandler,
+    // changeLongHandler,
+    latitude,
+    longitude,
+    setLatitudeSer,
+    setLongitudeSer,
 }) {
     const [show, setShow] = React.useState(false);
 
@@ -44,6 +50,16 @@ function BalList({
             });
     };
 
+    const changeLatHandler = (e) => {
+        e.preventDefault();
+        setLatitudeSer(e.target.value);
+    };
+
+    const changeLongHandler = (e) => {
+        e.preventDefault();
+        setLongitudeSer(e.target.value);
+    };
+
     return (
         <div style={{ marginBottom: 25 }}>
             {!noTags && (
@@ -75,6 +91,19 @@ function BalList({
                                     id="red"
                                     value={placemarker}
                                     onChange={changeHandler}
+                                />
+                                <input
+                                    type="text"
+                                    name="addbal"
+                                    id="cre"
+                                    value={latitude}
+                                    onChange={changeLatHandler}
+                                />
+                                <input
+                                    type="text"
+                                    name="addbal"
+                                    value={longitude}
+                                    onChange={changeLongHandler}
                                 />
                                 <button
                                     onClick={upgrade}
