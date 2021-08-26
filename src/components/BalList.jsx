@@ -14,6 +14,7 @@ function BalList({
     longitude,
     setLatitudeSer,
     setLongitudeSer,
+    placemarkerAll,
 }) {
     const [show, setShow] = React.useState(false);
 
@@ -37,6 +38,19 @@ function BalList({
 
     const delBal = () => {
         let id_user = localStorage.getItem("id_user");
+
+        //         let um = placemarkerAll;
+        //         debugger;
+
+        //         let index = placemarkerAll.indexOf(placemarker);
+
+        //         if (index > -1) {
+        //             placemarkerAll.splice(index, 1);
+        //         }
+        //         let gin = placemarkerAll;
+        //         // alert(placemarkerAll);
+        // setPlacemarker(gin)
+        //         debugger;
 
         axios
             .post("http://localhost:80/deleteBaloon/", {

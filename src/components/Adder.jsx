@@ -18,7 +18,7 @@ function Adder({
         let nameBal = document.getElementById("cre").value;
         localStorage.setItem("nameBal", nameBal);
         let id_user = localStorage.getItem("id_user");
-
+        debugger;
         axios
             .post("http://localhost:80/saveBaloon/", {
                 id_user: id_user,
@@ -26,6 +26,7 @@ function Adder({
                 coordinats: JSON.stringify([addSh, addDol]),
             })
             .then((resus) => {
+                debugger;
                 setPlacemarker(nameBal);
                 setNoTags(false);
                 setAddBal("");
@@ -33,6 +34,8 @@ function Adder({
                 setSh("");
                 setLatitudeSer(addSh);
                 setLongitudeSer(addDol);
+
+                debugger;
             });
     };
 

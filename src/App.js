@@ -83,6 +83,14 @@ function App() {
             });
     };
 
+    React.useEffect(() => {
+        if (placemarker) {
+            console.log(placemarker);
+            debugger;
+            getBal();
+        }
+    }, [placemarker]);
+
     return (
         <div className="App">
             {!goodAuth ? (
@@ -92,6 +100,7 @@ function App() {
                     <div style={{ marginBottom: 25 }}>
                         <h3>Вы вошли, как - {localStorage.getItem("login")}</h3>
                     </div>
+
                     <Adder
                         coordinates={coordinates}
                         setPlacemarker={setPlacemarker}
@@ -100,27 +109,11 @@ function App() {
                         setLongitudeSer={setLongitudeSer}
                     />
                     <div style={{ marginBottom: 25 }}>{noTags}</div>
-                    {coorr ? (
+                    {placemarker && coorr[0] && (
                         <>
-                            {" "}
                             <BalList
                                 placemarker={placemarker[0]}
-                                changeHandler={changeHandler}
-                                coordinates={coordinates}
-                                setPlacemarker={setPlacemarker}
-                                setNoTags={setNoTags}
-                                noTags={noTags}
-                                // changeLatHandler={changeLatHandler}
-                                // changeLongHandler={changeLongHandler}
-                                latitude={coorr[0][0]}
-                                longitude={coorr[0][1]}
-                                // latitude={latitude}
-                                // longitude={longitude}
-                                setLatitudeSer={setLatitudeSer}
-                                setLongitudeSer={setLongitudeSer}
-                            />
-                            <BalList
-                                placemarker={placemarker[1]}
+                                placemarkerAll={placemarker}
                                 changeHandler={changeHandler}
                                 coordinates={coordinates}
                                 setPlacemarker={setPlacemarker}
@@ -129,16 +122,43 @@ function App() {
                                 // changeLatHandler={changeLatHandler}
                                 // changeLongHandler={changeLongHandler}
 
-                                latitude={coorr[1][0]}
-                                longitude={coorr[1][1]}
+                                latitude={
+                                    coorr !== undefined ? coorr[0][0] : ""
+                                }
+                                longitude={
+                                    coorr !== undefined ? coorr[0][1] : ""
+                                }
                                 // latitude={latitude}
                                 // longitude={longitude}
                                 setLatitudeSer={setLatitudeSer}
                                 setLongitudeSer={setLongitudeSer}
                             />
                         </>
-                    ) : (
-                        "load"
+                    )}
+                    {coorr[1] && (
+                        <BalList
+                            placemarker={placemarker[1]}
+                            placemarkerAll={placemarker}
+                            changeHandler={changeHandler}
+                            coordinates={coordinates}
+                            setPlacemarker={setPlacemarker}
+                            setNoTags={setNoTags}
+                            noTags={noTags}
+                            // changeLatHandler={changeLatHandler}
+                            // changeLongHandler={changeLongHandler}
+
+                            // latitude={
+                            //     coorr !== undefined ? coorr[1][0] : ""
+                            // }
+                            // longitude={
+                            //     coorr !== undefined ? coorr[1][1] : ""
+                            // }
+
+                            // latitude={latitude}
+                            // longitude={longitude}
+                            setLatitudeSer={setLatitudeSer}
+                            setLongitudeSer={setLongitudeSer}
+                        />
                     )}
                     <Mapper
                         currentLatitude={currentLatitude}
