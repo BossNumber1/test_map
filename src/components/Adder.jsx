@@ -1,84 +1,54 @@
 import React from "react";
 import axios from "axios";
 
-function Adder({
-    coordinates,
-    setPlacemarker,
-    setNoTags,
-    setLatitudeSer,
-    setLongitudeSer,
-}) {
-    const [addBal, setAddBal] = React.useState("");
-    const [addSh, setSh] = React.useState("");
-    const [addDol, setDol] = React.useState("");
-
+function Adder({ setNoTags, setPlacemarker }) {
     const createBal = (e) => {
         e.preventDefault();
 
-        let nameBal = document.getElementById("cre").value;
-        localStorage.setItem("nameBal", nameBal);
+        let nameAdder = document.getElementById("nameAdder").value;
+        let latitudeAdder = document.getElementById("latitudeAdder").value;
+        let longitudeAdder = document.getElementById("longitudeAdder").value;
+
+        localStorage.setItem("nameAdder", nameAdder);
+
         let id_user = localStorage.getItem("id_user");
         debugger;
         axios
             .post("http://localhost:80/saveBaloon/", {
                 id_user: id_user,
-                name: nameBal,
-                coordinats: JSON.stringify([addSh, addDol]),
+                name: nameAdder,
+                latitude: latitudeAdder,
+                longitude: longitudeAdder,
             })
-            .then((resus) => {
+            .then(() => {
                 debugger;
-                setPlacemarker(nameBal);
                 setNoTags(false);
-                setAddBal("");
-                setDol("");
-                setSh("");
-                setLatitudeSer(addSh);
-                setLongitudeSer(addDol);
 
-                debugger;
+                document.getElementById("nameAdder").value = "";
+                document.getElementById("latitudeAdder").value = "";
+                document.getElementById("longitudeAdder").value = "";
+
+                const initialValue = [
+                    {
+                        id: 0,
+                        name: nameAdder,
+                        latitude: latitudeAdder,
+                        longitude: longitudeAdder,
+                    },
+                ];
+
+                setPlacemarker(initialValue);
             });
-    };
 
-    const changeHandler = (e) => {
-        e.preventDefault();
-        setAddBal(e.target.value);
-    };
-
-    const changeShirHandler = (e) => {
-        e.preventDefault();
-        setSh(e.target.value);
-    };
-
-    const changeDolHandler = (e) => {
-        e.preventDefault();
-        setDol(e.target.value);
+        debugger;
     };
 
     return (
         <div style={{ marginBottom: 25 }}>
             <form>
-                <input
-                    type="text"
-                    name="addbal"
-                    id="cre"
-                    placeholder="Имя вашей метки"
-                    value={addBal}
-                    onChange={changeHandler}
-                />
-                <input
-                    type="text"
-                    name="addbal"
-                    placeholder="Ширина"
-                    value={addSh}
-                    onChange={changeShirHandler}
-                />
-                <input
-                    type="text"
-                    name="addbal"
-                    placeholder="Долгота"
-                    value={addDol}
-                    onChange={changeDolHandler}
-                />
+                <input type="text" id="nameAdder" placeholder="Имя" />
+                <input type="text" id="latitudeAdder" placeholder="Ширина" />
+                <input type="text" id="longitudeAdder" placeholder="Долгота" />
                 <button onClick={createBal} style={{ marginLeft: 10 }}>
                     Добавить
                 </button>
