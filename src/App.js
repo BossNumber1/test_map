@@ -14,6 +14,8 @@ function App() {
     const [currentLatitude, setLatitude] = React.useState(false);
     const [currentLongitude, setLongitude] = React.useState(false);
 
+    const [coorr, setCoor] = React.useState(false);
+
     const [latitude, setLatitudeSer] = React.useState("");
     const [longitude, setLongitudeSer] = React.useState("");
 
@@ -45,10 +47,26 @@ function App() {
             })
             .then((resultat) => {
                 if (resultat.data !== "[]") {
-                    let name = JSON.parse(resultat.data)[0].name;
-                    let coor = JSON.parse(
-                        JSON.parse(resultat.data)[0].coordinats
-                    );
+                    let x = JSON.parse(resultat.data);
+                    let name = [];
+                    for (let i = 0; i < x.length; i++) {
+                        name.push(JSON.parse(resultat.data)[i].name);
+                    }
+                    // let genri = name;
+                    debugger;
+                    // let name = JSON.parse(resultat.data)[0].name;
+
+                    let coor = [];
+                    for (let i = 0; i < x.length; i++) {
+                        coor.push(
+                            JSON.parse(JSON.parse(resultat.data)[i].coordinats)
+                        );
+                        debugger;
+                    }
+
+                    // let coor = JSON.parse(
+                    //     JSON.parse(resultat.data)[0].coordinats
+                    // );
                     // coor.split
 
                     // let cir = coor.split(",");
@@ -56,8 +74,9 @@ function App() {
                     setPlacemarker(name);
                     // setLatitudeSer(cir[0]);
                     // setLongitudeSer(cir[1]);
-                    setLatitudeSer(coor[0]);
-                    setLongitudeSer(coor[1]);
+                    setCoor(coor);
+                    // setLatitudeSer(coor[0]);
+                    // setLongitudeSer(coor[1]);
                 } else {
                     setNoTags("Меток нет");
                 }
@@ -81,20 +100,46 @@ function App() {
                         setLongitudeSer={setLongitudeSer}
                     />
                     <div style={{ marginBottom: 25 }}>{noTags}</div>
-                    <BalList
-                        placemarker={placemarker}
-                        changeHandler={changeHandler}
-                        coordinates={coordinates}
-                        setPlacemarker={setPlacemarker}
-                        setNoTags={setNoTags}
-                        noTags={noTags}
-                        // changeLatHandler={changeLatHandler}
-                        // changeLongHandler={changeLongHandler}
-                        latitude={latitude}
-                        longitude={longitude}
-                        setLatitudeSer={setLatitudeSer}
-                        setLongitudeSer={setLongitudeSer}
-                    />
+                    {coorr ? (
+                        <>
+                            {" "}
+                            <BalList
+                                placemarker={placemarker[0]}
+                                changeHandler={changeHandler}
+                                coordinates={coordinates}
+                                setPlacemarker={setPlacemarker}
+                                setNoTags={setNoTags}
+                                noTags={noTags}
+                                // changeLatHandler={changeLatHandler}
+                                // changeLongHandler={changeLongHandler}
+                                latitude={coorr[0][0]}
+                                longitude={coorr[0][1]}
+                                // latitude={latitude}
+                                // longitude={longitude}
+                                setLatitudeSer={setLatitudeSer}
+                                setLongitudeSer={setLongitudeSer}
+                            />
+                            <BalList
+                                placemarker={placemarker[1]}
+                                changeHandler={changeHandler}
+                                coordinates={coordinates}
+                                setPlacemarker={setPlacemarker}
+                                setNoTags={setNoTags}
+                                noTags={noTags}
+                                // changeLatHandler={changeLatHandler}
+                                // changeLongHandler={changeLongHandler}
+
+                                latitude={coorr[1][0]}
+                                longitude={coorr[1][1]}
+                                // latitude={latitude}
+                                // longitude={longitude}
+                                setLatitudeSer={setLatitudeSer}
+                                setLongitudeSer={setLongitudeSer}
+                            />
+                        </>
+                    ) : (
+                        "load"
+                    )}
                     <Mapper
                         currentLatitude={currentLatitude}
                         currentLongitude={currentLongitude}
